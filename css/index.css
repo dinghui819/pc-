@@ -1,0 +1,49 @@
+/*头部样式开始*/
+#head{
+	background: #fff!important;
+}
+#head .headMain{
+	height: 80px;
+	position: relative;
+}
+#head .headMain .logo img{
+	width: 180px;
+	height: 60px;
+}
+#head .headMain .nav{
+	margin-top: 50px;
+}
+#head .headMain .nav .lists li{
+	position: relative;
+	float: left;
+	margin-left: 40px;
+}
+#head .nav .lists li .up{
+	position: absolute;
+	color: #000000;
+	width: 0;
+	overflow: hidden;
+	transition: 1s width;
+}
+#head .nav .lists li a img{
+	width: 21px;
+}
+#head .nav .lists li:hover .up{
+	width: 100%;
+}
+#head .arrow{
+	width: 32px;
+	height: 32px;
+	background: url(../img/arrow.png);
+	position: absolute;
+	left: 50%;
+	bottom: -20px;
+	transition: 1s left;
+}
+/*头部样式结束*/
+/*内容样式开始*/
+#content{
+	height: 300px;
+	background: gray;
+}
+/*内容样式结束*/

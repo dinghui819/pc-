@@ -1,0 +1,32 @@
+/*重置样式*/
+*{
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	box-sizing: border-box;/*设置width和height时包括padding和border*/
+}
+.content{
+	min-width: 1100px;
+	width: 1100px;
+	margin: 0 auto;
+}
+/*清楚ul里面的圆点*/
+ul{
+	list-style: none;
+}
+/*清楚a标签默认样式*/
+a{
+	text-decoration: none;
+	display: block;
+}
+img{
+	display: block;
+}
+/*去掉输入框的聚焦边框颜色*/
+:focus{
+	outline: none;
+}
+i,em{
+	font-style: normal;
+}
