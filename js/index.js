@@ -12,9 +12,12 @@ window.onload = function () {
 	var cLiNodes = document.querySelectorAll('#content .lists > li')
 	var cList = document.querySelector('#content .lists')
 	
+	//同步当前屏的索引
 	var now = 0
 	
+	var timer = 0
 	//onresize 事件会在窗口或框架被调整大小时发生
+	//内容区
 	window.onresize = function () {
 		// 调整分辨率
 			//1.没有点击时,视口只出现一屏 contentBind()
@@ -26,6 +29,50 @@ window.onload = function () {
 		arrowEl.style.left = liNodes[now].offsetLeft + liNodes[now].offsetWidth/2 - arrowEl.offsetWidth/2+"px"
 	}
 	//内容区的交互
+	
+	//滚轮的操作
+	if (content.addEventListener) {
+		content.addEventListener("DOMMouseScroll",function (ev) {
+			ev = ev || event
+			clearInterval(timer)
+			timer = setTimeout(function () {
+				fn(ev)
+			}, 200)
+		})
+	}
+	content.onmousewheel = function (ev) {
+		ev = ev || event
+		//让fn的逻辑在DOMMouseScroll事件被触发的时候只执行一次
+		clearInterval(timer)
+		timer = setTimeout(function () {
+			fn(ev)
+		}, 200)
+	}
+	function fn(ev) {
+		ev = ev || event
+		var dir = ""
+		if (ev.wheelDelta) {
+			//如果ev.wheelData > 0表示鼠标向上滑动
+			dir = ev.wheelDelta > 0?"up":"down"
+		} else if(ev.detail) {
+			dir = ev.detail < 0?"up":"down"
+		}
+		switch (dir) {
+			case "up":
+				if (now > 0) {
+					now--
+					move(now)
+				}
+				break;
+			case "down":
+				if (now < cLiNodes.length - 1) {
+					now++
+					move(now)
+				}
+				break;
+		}
+	}
+	
 	contentBind()
 	function contentBind() {
 		// 内容区的高度 = 视口的高度 - 头部的高度
@@ -35,6 +82,7 @@ window.onload = function () {
 			cLiNodes[i].style.height = document.documentElement.clientHeight - head.offsetHeight + "px"
 		}
 	}
+	
 	//头部的交互
 	headBind()
 	function headBind() {
@@ -52,15 +100,15 @@ window.onload = function () {
 				now = this.index
 			}
 		}
-		//小三角形的移动
-		function move(index) {
-			for (var i = 0; i < upNodes.length; i++) {
-					upNodes[i].style.width = ""
-				}
-			upNodes[index].style.width = "100%"
-			console.log(index)
-			arrowEl.style.left = liNodes[index].offsetLeft + liNodes[index].offsetWidth/2 - arrowEl.offsetWidth/2+"px"
-			cList.style.top = -index*(document.documentElement.clientHeight - head.offsetHeight) + "px"
-		}
+	}
+	//小三角形的移动
+	function move(index) {
+		for (var i = 0; i < upNodes.length; i++) {
+				upNodes[i].style.width = ""
+			}
+		upNodes[index].style.width = "100%"
+		console.log(index)
+		arrowEl.style.left = liNodes[index].offsetLeft + liNodes[index].offsetWidth/2 - arrowEl.offsetWidth/2+"px"
+		cList.style.top = -index*(document.documentElement.clientHeight - head.offsetHeight) + "px"
 	}
 }
